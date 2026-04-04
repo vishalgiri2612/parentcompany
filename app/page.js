@@ -106,7 +106,7 @@ export default function Home() {
           
           <div className="relative z-10 max-w-7xl">
               <span className="inline-block font-body text-[10px] md:text-xs uppercase tracking-[0.5em] text-gold mb-8 opacity-0 animate-in fade-in slide-in-from-left duration-1000 fill-mode-forwards">
-                  Est. 1952 · Global Conglomerate
+                  Est. 1952 · National Conglomerate
               </span>
               <h1 className="font-headline italic text-[11vw] sm:text-6xl md:text-8xl lg:text-[10rem] leading-[1.1] text-glacier flex flex-col items-start gap-2 mb-12 drop-shadow-2xl">
                   <span className="flex overflow-hidden">
@@ -135,7 +135,7 @@ export default function Home() {
         <section ref={aboutSection.ref} className="py-24 md:py-64 px-6 md:px-24 flex flex-col lg:flex-row items-center gap-24 relative overflow-visible">
             <div className={`w-full lg:w-3/5 transition-all duration-1000 ease-out ${aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'}`}>
                 <h2 className="font-headline font-light italic text-4xl md:text-7xl mb-12 leading-tight">
-                    A singular standard of excellence across the global industrial landscape.
+                    A singular standard of excellence across the national industrial landscape.
                 </h2>
                 <div className="gold-rule w-1/3 mb-12 !justify-start" />
                 <p className="font-body text-lg md:text-xl text-glacier/80 leading-relaxed max-w-2xl">
@@ -156,11 +156,11 @@ export default function Home() {
                     <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
                         {useCounter(18, 0, 2000, aboutSection.isVisible)}
                     </span>
-                    <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Countries</span>
+                    <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">States</span>
                 </div>
                 <div className="group">
                     <span className="font-industrial text-4xl md:text-6xl text-gold block mb-2 transition-transform duration-500 group-hover:scale-110">
-                        $2.4B+
+                        ₹2.4B+
                     </span>
                     <span className="font-body text-[10px] uppercase tracking-[0.4em] text-glacier/50">Asset Value</span>
                 </div>
@@ -360,12 +360,12 @@ export default function Home() {
                     <h2 className="font-headline text-5xl md:text-9xl mb-8 leading-none italic">Build Something <br /> That Lasts.</h2>
                     <div className="flex gap-12 mt-16 font-body text-[10px] uppercase tracking-[0.5em] font-bold">
                         <div>
-                             <span className="block opacity-40 mb-2">London HQ</span>
-                             <span>Mayfair, W1K</span>
+                             <span className="block opacity-40 mb-2">New Delhi HQ</span>
+                             <span>Connaught Place</span>
                         </div>
                         <div>
-                             <span className="block opacity-40 mb-2">Zurich</span>
-                             <span>Seefeldstrasse</span>
+                             <span className="block opacity-40 mb-2">Bengaluru</span>
+                             <span>Indiranagar, KA</span>
                         </div>
                     </div>
                 </div>

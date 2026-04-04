@@ -59,7 +59,7 @@ export default function Companies() {
         {/* Portfolio Hero */}
         <section className="min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center px-6 md:px-24 pt-32 relative overflow-hidden">
             <div className="max-w-7xl relative z-10">
-                <span className="font-industrial text-[10px] md:text-xs tracking-[0.5em] text-gold mb-6 block uppercase">Global Assets</span>
+                <span className="font-industrial text-[10px] md:text-xs tracking-[0.5em] text-gold mb-6 block uppercase">National Assets</span>
                 <h1 className="font-headline italic text-[11vw] sm:text-6xl md:text-9xl leading-[0.9] mb-8 md:mb-12">
                    The <span className="text-gold">Sovereign</span> <br /> Portfolio.
                 </h1>
@@ -100,7 +100,7 @@ export default function Companies() {
                         </div>
                         <div className="flex items-center gap-4">
                             <span className="w-12 h-px bg-gold/30" />
-                            <span>GLOBAL SUPPLY CHAIN EXCELLENCE</span>
+                            <span>NATIONAL SUPPLY CHAIN EXCELLENCE</span>
                         </div>
                     </div>
                 </div>

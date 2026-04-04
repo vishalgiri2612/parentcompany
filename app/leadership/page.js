@@ -145,7 +145,7 @@ export default function Leadership() {
                       <h2 className="font-headline italic text-7xl md:text-9xl mb-12 leading-tight">Board of <br />Directors.</h2>
                       <div className="h-0.5 bg-dark w-1/3 mb-12" />
                       <p className="font-body text-xl max-w-sm leading-relaxed mb-12">
-                          A diverse panel of world-class experts steering international oversight and strategic compliance.
+                          A diverse panel of top-tier experts steering national oversight and strategic compliance.
                       </p>
                   </div>
                   <div className="md:col-span-7 space-y-16">
@@ -158,17 +158,17 @@ export default function Leadership() {
                             <div className="border-l border-dark/20 pl-8 transition-all hover:translate-x-2">
                                 <h4 className="font-headline text-3xl italic mb-4">Sophia Laurent</h4>
                                 <p className="font-body text-[10px] uppercase tracking-[0.4em] opacity-40 font-bold mb-4">AUDIT CHAIR</p>
-                                <p className="font-body text-sm opacity-60">International Corporate Law and Cross-border Merger Regulation.</p>
+                                <p className="font-body text-sm opacity-60">Corporate Law and Cross-border Merger Regulation.</p>
                             </div>
                             <div className="border-l border-dark/20 pl-8 transition-all hover:translate-x-2">
                                 <h4 className="font-headline text-3xl italic mb-4">Jameson Burke</h4>
                                 <p className="font-body text-[10px] uppercase tracking-[0.4em] opacity-40 font-bold mb-4">ESG OFFICER</p>
-                                <p className="font-body text-sm opacity-60">Dedicated to implementing ethical frameworks across global hubs.</p>
+                                <p className="font-body text-sm opacity-60">Dedicated to implementing ethical frameworks across regional hubs.</p>
                             </div>
                             <div className="border-l border-dark/20 pl-8 transition-all hover:translate-x-2">
                                 <h4 className="font-headline text-3xl italic mb-4">Amara Okafor</h4>
                                 <p className="font-body text-[10px] uppercase tracking-[0.4em] opacity-40 font-bold mb-4">RISK ADVISOR</p>
-                                <p className="font-body text-sm opacity-60">Geopolitical market shifts and emerging infrastructure specialist.</p>
+                                <p className="font-body text-sm opacity-60">Domestic market shifts and emerging infrastructure specialist.</p>
                             </div>
                        </div>
                   </div>

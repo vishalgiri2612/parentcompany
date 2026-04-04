@@ -122,7 +122,7 @@ export default function Investment() {
                 <span className="font-industrial text-gold tracking-[0.4em] text-xs mb-8 block uppercase">Institutional Investment</span>
                 <h2 className="font-headline italic text-5xl md:text-7xl mb-8 leading-tight">Join the <br /> Sovereign Core.</h2>
                 <p className="font-body text-glacier/60 leading-relaxed mb-12 italic">
-                    Acquire stake in the most disciplined conglomerate on the global stage. We provide Institutional Partners with direct pipeline access to our Real Estate, AgriTech, and Saas portfolios.
+                    Acquire stake in the most disciplined conglomerate on the sovereign stage. We provide Institutional Partners with direct pipeline access to our Real Estate, AgriTech, and Saas portfolios.
                 </p>
                 <button className="w-full md:w-auto px-12 py-6 border border-gold/40 text-xs font-industrial tracking-[0.5em] hover:bg-gold hover:text-dark transition-all uppercase">
                     Institutional Prospectus →
@@ -144,8 +144,8 @@ export default function Investment() {
         {/* Global Stats Bar */}
         <section className="py-12 bg-dark flex flex-wrap justify-between items-center px-8 md:px-24 gap-12 font-industrial text-3xl md:text-5xl text-glacier/10 select-none uppercase">
             <span>22.4% CAGR</span>
-            <span>$4B LIQUIDITY</span>
-            <span>Global A+ Rating</span>
+            <span>₹4B LIQUIDITY</span>
+            <span>National A+ Rating</span>
             <span>Est. 1952</span>
         </section>
 
