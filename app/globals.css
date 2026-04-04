@@ -1,26 +1,139 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --font-headline: "Cormorant Garamond", serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-industrial: "Bebas Neue", sans-serif;
+  
+  --color-dark: #080808;
+  --color-gold: #C9A84C;
+  --color-glacier: #F5F5F0;
+  
+  --breakpoint-3xl: 1920px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    @apply border-white/5;
+  }
+  
+  body {
+    @apply bg-dark text-glacier font-body overflow-x-hidden selection:bg-gold selection:text-dark;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Custom Thin Gold Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-dark;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold/50 hover:bg-gold transition-colors rounded-full;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Editorial Shadow */
+  .editorial-shadow {
+    box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8), 
+                0 20px 40px -10px rgba(201, 168, 76, 0.1);
+  }
+
+  /* Grain Texture Overlay */
+  .grain-overlay {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 9999;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+    animation: grain 8s steps(10) infinite;
+  }
+
+  @keyframes grain {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(-15%, 5%) }
+    30% { transform:translate(7%, -25%) }
+    40% { transform:translate(-5%, 25%) }
+    50% { transform:translate(-15%, 10%) }
+    60% { transform:translate(15%, 0%) }
+    70% { transform:translate(0%, 15%) }
+    80% { transform:translate(3%, 35%) }
+    90% { transform:translate(-10%, 10%) }
+  }
+
+  /* Custom Cursor */
+  .cursor-dot {
+    @apply fixed w-2 h-2 bg-gold rounded-full pointer-events-none z-[9999] mix-blend-difference;
+    transition: transform 0.1s ease-out;
+  }
+  .cursor-outline {
+    @apply fixed w-8 h-8 border border-gold rounded-full pointer-events-none z-[9998];
+    transition: transform 0.2s ease-out;
+  }
+
+  /* Split Letter Animation */
+  .split-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease-out;
+  }
+  .split-letter.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Diagonal Section Transitions */
+  .diagonal-wipe {
+    clip-path: polygon(0 15vh, 100% 0, 100% 85vh, 0 100%);
+  }
+
+  /* Perspective Tilt */
+  .perspective-card {
+    perspective: 1000px;
+  }
+  .perspective-card-inner {
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+  }
+  /* Section Reveal Up */
+  .reveal-y {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease-out;
+  }
+  .reveal-y.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Page Entrance */
+  @keyframes pageIn {
+    from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+    to { opacity: 1; filter: blur(0px); transform: translateY(0); }
+  }
+  .animate-page-in {
+    animation: pageIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+  }
+  
+  .asymmetric-bleed-right {
+    width: calc(100% + 50vw);
+    min-width: 100%;
+  }
+
+  .gold-rule {
+    @apply h-px bg-gradient-to-r from-transparent via-gold to-transparent opacity-30;
+  }
 }
