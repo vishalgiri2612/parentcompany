@@ -5,20 +5,48 @@
   --font-body: "DM Sans", sans-serif;
   --font-industrial: "Bebas Neue", sans-serif;
   
-  --color-dark: #080808;
+  --color-dark: #0F0F0F;
   --color-gold: #C9A84C;
-  --color-glacier: #F5F5F0;
+  --color-glacier: #FFFFFF;
   
   --breakpoint-3xl: 1920px;
+
+  --animate-text-reveal: text-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-fade-in: fade-in 1.2s ease-out forwards;
+  --animate-slide-up: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes text-reveal {
+    from { opacity: 0; transform: translateY(2rem) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scroll-indicator {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes scroll-indicator-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
+
+  --animate-scroll-ticker: scroll-indicator 40s linear infinite;
+  --animate-scroll-ticker-reverse: scroll-indicator-reverse 40s linear infinite;
 }
 
 @layer base {
   * {
-    @apply border-white/5;
+    @apply border-dark/5;
   }
   
   body {
-    @apply bg-dark text-glacier font-body overflow-x-hidden selection:bg-gold selection:text-dark;
+    @apply bg-glacier text-dark font-body overflow-x-hidden selection:bg-gold selection:text-white;
   }
 
   /* Custom Thin Gold Scrollbar */
@@ -26,7 +54,7 @@
     width: 4px;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-dark;
+    @apply bg-glacier;
   }
   ::-webkit-scrollbar-thumb {
     @apply bg-gold/50 hover:bg-gold transition-colors rounded-full;
@@ -50,7 +78,7 @@
     z-index: 9999;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.05;
+    opacity: 0.08;
     animation: grain 8s steps(10) infinite;
   }
 
@@ -120,11 +148,35 @@
 
   /* Page Entrance */
   @keyframes pageIn {
-    from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
-    to { opacity: 1; filter: blur(0px); transform: translateY(0); }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   .animate-page-in {
-    animation: pageIn 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: pageIn 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+
+  /* Intelligent Reveal */
+  .reveal-staggered > * {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease-out;
+    will-change: transform, opacity;
+  }
+  .reveal-staggered.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Fallback if isVisible is still stuck - ensures accessibility */
+  .reveal-staggered:not(.visible) {
+    min-height: 100px;
+  }
+
+  @keyframes revolve {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .revolve {
+    animation: revolve 120s linear infinite;
   }
 }
 
@@ -140,18 +192,13 @@
 
   /* Premium Gold Gradient Text */
   .text-gold-premium {
-    background: linear-gradient(135deg, #8E6D24 0%, #C9A84C 50%, #FFD700 80%, #8E6D24 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: goldShine 5s linear infinite;
+    @apply text-gold font-bold;
+    text-shadow: 0 0 1px rgba(201, 168, 76, 0.2);
   }
 
-  @keyframes goldShine {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+  /* Highlight Style from Image */
+  .gold-highlight {
+    @apply bg-gold text-dark px-4 py-2 inline-block leading-tight;
   }
 
   .gold-rule {

@@ -15,7 +15,6 @@ function useReveal() {
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setIsVisible(true);
-                    observer.unobserve(entry.target);
                 }
             },
             { threshold: 0.1 }
@@ -27,315 +26,223 @@ function useReveal() {
     return { ref, isVisible };
 }
 
+const CompanySection = ({ id, name, tagline, description, impact, leader, mission, details, website, reverse, delay = 0, isVisible }) => (
+    <section className={`py-24 md:py-32 px-6 md:px-24 border-b border-dark/5 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`} style={{ transitionDelay: `${delay}ms` }}>
+        <div className={`max-w-screen-2xl mx-auto flex flex-col ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-16 md:gap-24 items-start`}>
+            <div className="w-full lg:w-1/2">
+                <span className="font-industrial text-gold tracking-[0.6em] text-[10px] uppercase font-bold mb-8 block underline decoration-gold/20 underline-offset-8">Entity {id} / ASSET OPS</span>
+                <h2 className="font-headline italic text-6xl md:text-8xl text-dark leading-[0.9] mb-12">{name}</h2>
+                <div className="gold-rule w-32 mb-12 !justify-start" />
+                <p className="font-body text-xl md:text-2xl text-dark mb-12 border-l-2 border-gold/40 pl-8 leading-relaxed italic">
+                    {tagline}
+                </p>
+                <div className="space-y-8 mb-16">
+                    <div className="flex items-start gap-6">
+                        <span className="font-industrial text-gold text-xs font-bold pt-1 min-w-[70px]">MISSION</span>
+                        <p className="font-body text-dark/80 leading-relaxed uppercase tracking-wider text-[12px] font-bold">{mission}</p>
+                    </div>
+                    <div className="flex items-start gap-6">
+                        <span className="font-industrial text-gold text-xs font-bold pt-1 min-w-[70px]">LEADERSHIP</span>
+                        <div>
+                            <p className="font-headline italic text-3xl text-dark mb-1">{leader.name}</p>
+                            <p className="font-industrial text-[10px] tracking-[0.4em] text-dark/60 font-bold uppercase">{leader.role}</p>
+                        </div>
+                    </div>
+                </div>
+                <a href={website} target="_blank" rel="noopener noreferrer" className="inline-block px-12 py-5 bg-dark text-glacier font-industrial text-[11px] tracking-[0.5em] font-bold uppercase transition-all hover:bg-gold hover:text-dark shadow-xl hover:-translate-y-1">
+                    Explore Ecosystem
+                </a>
+            </div>
+            <div className="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                {impact.map((stat, idx) => (
+                    <div key={idx} className="bg-white p-10 border border-dark/5 hover:border-gold/20 transition-colors">
+                        <h4 className="font-headline italic text-4xl text-dark mb-2">{stat.value}</h4>
+                        <p className="font-industrial text-[9px] tracking-widest text-dark/40 font-bold uppercase">{stat.label}</p>
+                    </div>
+                ))}
+                <div className="md:col-span-2 bg-dark p-12 text-glacier">
+                    <h5 className="font-industrial text-gold tracking-widest text-[11px] font-bold uppercase mb-8 underline decoration-gold/10 underline-offset-8">Process Architecture</h5>
+                    <div className="space-y-8">
+                        {details.map((item, idx) => (
+                            <div key={idx} className="flex gap-6">
+                                <span className="font-headline italic text-3xl text-gold/60">{String(idx + 1).padStart(2, '0')}</span>
+                                <p className="font-body text-[14px] text-white/50 leading-relaxed italic">{item}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+);
+
 export default function Companies() {
-    const bworthSect = useReveal();
-    const vegaSect = useReveal();
-    const rymSect = useReveal();
-    const syncSect = useReveal();
-
-
-    useEffect(() => {
-        const dot = document.querySelector(".cursor-dot");
-        const outline = document.querySelector(".cursor-outline");
-        const moveCursor = (e) => {
-            if (dot && outline) {
-                dot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-                outline.style.transform = `translate(${e.clientX - 12}px, ${e.clientY - 12}px)`;
-            }
-        };
-        window.addEventListener("mousemove", moveCursor);
-        return () => window.removeEventListener("mousemove", moveCursor);
-    }, []);
+    const bworth = useReveal();
+    const vega = useReveal();
+    const rym = useReveal();
+    const sync = useReveal();
 
     return (
-        <div className="bg-dark text-glacier min-h-screen selection:bg-gold selection:text-dark overflow-x-hidden">
-            <div className="grain-overlay" />
-            <div className="cursor-dot hidden md:block" />
-            <div className="cursor-outline hidden md:block" />
-
+        <div className="bg-glacier min-h-screen selection:bg-gold selection:text-dark">
             <Navbar />
 
-            <main className="animate-page-in">
-                {/* Portfolio Hero */}
-                <section className="min-h-[60vh] md:min-h-[70vh] flex flex-col justify-center px-6 md:px-24 pt-32 relative overflow-hidden">
-                    <div className="max-w-7xl relative z-10">
-                        <span className="font-industrial text-[10px] md:text-xs tracking-[0.5em] text-gold mb-6 block uppercase">National Strategic Assets</span>
-                        <h1 className="font-headline italic text-[11vw] sm:text-6xl md:text-9xl leading-[0.9] mb-8 md:mb-12">
-                            The <span className="text-gold-premium italic">Sovereign</span> <br /> Custody.
-                        </h1>
-                        <div className="gold-rule w-1/4 mb-12 !justify-start" />
-                        <p className="font-body text-lg md:text-xl text-glacier/60 max-w-xl leading-relaxed italic">
-                            A collection of four market-leading empires, purpose-built to engineer the industrial destiny of a sovereign nation.
-                        </p>
-                    </div>
-                    {/* Background Graphic */}
-                    <div className="absolute top-1/2 right-[-10vw] w-[80vw] md:w-[60vw] h-[80vw] md:h-[60vw] border-[0.5px] border-gold/10 rounded-full -translate-y-1/2 pointer-events-none" />
-                </section>
-
-                {/* 1. BWORTH - Finance & Luxury RE */}
-                <section ref={bworthSect.ref} className="py-24 md:py-48 px-6 md:px-24 relative overflow-hidden">
-                    <div className={`flex flex-col lg:flex-row gap-12 md:gap-24 items-center transition-all duration-1000 ${bworthSect.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-                        <div className="w-full lg:w-3/5 relative">
-                            <div className="aspect-[16/10] bg-white/5 rounded-sm overflow-hidden relative editorial-shadow group">
-                                <Link href="https://bworth.co.in/" target="_blank">
-                                    <Image 
-                                        src="/BWORTH.jpg" 
-                                        fill 
-                                        sizes="(max-width: 1024px) 100vw, 60vw"
-                                        className="object-contain p-8 md:p-12 grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" 
-                                        alt="BWorth Luxury Apparel" 
-                                    />
-                                    <div className="absolute inset-0 bg-dark/40 group-hover:bg-dark/0 transition-colors" />
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="w-full lg:w-2/5">
-                            <span className="font-industrial text-gold tracking-widest text-base md:text-lg mb-4 block uppercase">01 · BWORTH</span>
-                            <h2 className="font-headline italic text-5xl md:text-7xl mb-8 leading-tight">The Modern <br /> Apparel.</h2>
-                            
-                            <div className="flex items-center gap-6 mb-8">
-                                 <Link href="https://bworth.co.in/" target="_blank" className="flex items-center gap-6 hover:opacity-80 transition-opacity">
-                                     <div className="w-12 h-12 rounded-full border border-gold/40 p-1">
-                                         <div className="w-full h-full rounded-full bg-gold/10 overflow-hidden relative grayscale">
-                                             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-gold/40 text-sm">person</span>
-                                         </div>
-                                     </div>
-                                     <div className="font-industrial text-[10px] tracking-[0.3em] uppercase">
-                                         <span className="block text-gold">Dheeraj Anand</span>
-                                         <span className="opacity-40 text-[8px]">18 Years Institutional Expertise</span>
-                                     </div>
-                                 </Link>
-                            </div>
-
-                            <p className="font-body text-[15px] md:text-lg text-glacier/60 leading-relaxed mb-6 italic">
-                                Bworth is the lifestyle arm of RISEMATE VENTURE. Repurposing fashion for a sovereign future.
-                            </p>
-                            <p className="font-body text-sm text-glacier/40 leading-relaxed mb-8">
-                                Founded in April 2024 in Gurugram, Bworth engineers circular apparel ecosystems to eliminate wardrobe clutter and landfill emissions through high-fashion utility.
-                            </p>
-
-                            <div className="mb-12">
-                                 <Link href="https://bworth.co.in/" target="_blank" className="font-industrial text-[10px] tracking-[0.4em] text-gold border-b border-gold/20 pb-2 hover:border-gold transition-all uppercase inline-block">
-                                    Explore Nexus →
-                                 </Link>
-                            </div>
-
-                            <div className="flex flex-col gap-6 font-industrial text-[10px] md:text-xs tracking-[0.3em]">
-                                <div className="flex items-center gap-4">
-                                    <span className="w-12 h-px bg-gold" />
-                                    <span>PREMIUM SUSTAINABLE FABRICS</span>
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <span className="w-12 h-px bg-gold/30" />
-                                    <span>NATIONAL SUPPLY CHAIN EXCELLENCE</span>
-                                </div>
-                            </div>
-                        </div>
+            <main className="pt-40 md:pt-64">
+                <section className="py-24 px-6 md:px-24 bg-white border-b border-dark/5">
+                    <div className="max-w-screen-2xl mx-auto">
+                        <span className="font-industrial text-gold tracking-[0.5em] text-[10px] uppercase font-bold mb-8 block">Global Portfolio</span>
+                        <h1 className="font-headline italic text-6xl md:text-[8rem] text-dark leading-none italic">The Sovereign Digital <br /> Legacy.</h1>
                     </div>
                 </section>
 
-                {/* 2. VEGAVRUDHI - Managed Sales & Staffing */}
-                <section ref={vegaSect.ref} className="py-24 md:py-48 px-6 md:px-24 bg-gold/5 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none">
-                         <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle, #C9A84C 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-                    </div>
+                <div ref={bworth.ref}>
+                    <CompanySection
+                        id="01"
+                        name="BWorth"
+                        tagline="Sustainable Fashion Innovation Leader."
+                        mission="Revolutionizing the fashion industry through a unique buyback program that preserves the planet's beauty."
+                        leader={{ name: "Dheeraj Anand", role: "Founder & CEO" }}
+                        website="https://bworth.co.in/"
+                        impact={[
+                            { value: "10,000+", label: "Items Recycled" },
+                            { value: "5,000+", label: "Users Joined" },
+                            { value: "25,000+", label: "Total Items Saved" },
+                            { value: "CO₂ TRACK", label: "Live Monitoring" }
+                        ]}
+                        details={[
+                            "Easily upload pictures of garments you no longer wear.",
+                            "Earn BWorth Coins instantly where 1 Coin = ₹1 value.",
+                            "Use coins as cash for new styles or contribute to global circularity."
+                        ]}
+                        isVisible={bworth.isVisible}
+                    />
+                </div>
 
-                    <div className={`flex flex-col lg:flex-row-reverse gap-12 md:gap-24 items-center transition-all duration-1000 ${vegaSect.isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-20 md:translate-x-40'}`}>
-                        <div className="w-full lg:w-3/5 relative">
-                            <div className="aspect-[16/10] bg-dark/5 rounded-sm overflow-hidden relative editorial-shadow group">
-                                <Link href="https://www.vegavruddhi.com/" target="_blank">
-                                    <Image 
-                                        src="/VEGA.png" 
-                                        fill 
-                                        sizes="(max-width: 1024px) 100vw, 60vw"
-                                        className="object-contain p-8 md:p-16 grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105" 
-                                        alt="Vegavrudhi Managed Services" 
-                                    />
-                                    <div className="absolute inset-0 bg-gold/5 group-hover:bg-gold/0 transition-colors" />
-                                </Link>
+                <div ref={vega.ref}>
+                    <CompanySection
+                        id="02"
+                        name="Vega Vrudhi"
+                        tagline="Precision Execution & Growth Architecture."
+                        mission="To be the trusted growth engine for brands, enabling them to engage meaningfully and scale sustainably."
+                        leader={{ name: "Saurabh Jain", role: "Founder & CEO" }}
+                        website="https://www.vegavruddhi.com/"
+                        impact={[
+                            { value: "PAN-INDIA", label: "Execution Reach" },
+                            { value: "AI/ML", label: "Tech Core" },
+                            { value: "99.8%", label: "Client Satisfaction" },
+                            { value: "ETHICAL", label: "Value System" }
+                        ]}
+                        details={[
+                            "Digital Lead Fulfillment bridging the gap to verified customers.",
+                            "Managed Sales engines deploying trained field teams nationwide.",
+                            "On-ground Activation logistics handling full market presence."
+                        ]}
+                        reverse
+                        isVisible={vega.isVisible}
+                    />
+                </div>
+
+                <div ref={rym.ref}>
+                    <CompanySection
+                        id="03"
+                        name="RYM Grenergy"
+                        tagline="Intelligent Systems & Deep-Tech Engineering."
+                        mission="Building intelligent, AI-powered solutions that optimize efficiency and reduce carbon footprint."
+                        leader={{ name: "Yograj Rundhanker", role: "Founder & CEO" }}
+                        website="https://rymgrenergy.com/"
+                        impact={[
+                            { value: "ULTRON", label: "Flagship Energy Platform" },
+                            { value: "REEWS", label: "Early Detection Warning" },
+                            { value: "IOT/AI", label: "Embedded Systems" },
+                            { value: "GKM ENERGY", label: "Key Deployment" }
+                        ]}
+                        details={[
+                            "ULTRON: Deployed with GKM Energy for real-time monitoring.",
+                            "INTELLEXA AI: Universal document intelligence for large enterprises.",
+                            "Weighbridge AI: Intelligent traffic-optimization and routing systems."
+                        ]}
+                        isVisible={rym.isVisible}
+                    />
+                </div>
+
+                <div ref={sync.ref}>
+                    <CompanySection
+                        id="04"
+                        name="Synchronous"
+                        tagline="High-Performance Digital Marketing Group."
+                        mission="Architecting high-velocity digital ecosystems for high-growth elite brands."
+                        leader={{ name: "Devam Srivastava", role: "Founder & CEO" }}
+                        website="https://www.synchronousbuilddigital.com/"
+                        impact={[
+                            { value: "METHOD 4.0", label: "Proprietary Framework" },
+                            { value: "NEURAL", label: "Ad Arbitrage" },
+                            { value: "SCALE", label: "Equity Scaling" },
+                            { value: "ELITE", label: "Digital Monitoring" }
+                        ]}
+                        details={[
+                            "Neural Audit mapping search arbitrage vectors across markets.",
+                            "Performance-obsessed retention logic and ROAS optimization.",
+                            "Neural conversion loops and algorithmic market dominance."
+                        ]}
+                        reverse
+                        isVisible={sync.isVisible}
+                    />
+                </div>
+
+                {/* Footer and Contact update */}
+                <footer className="bg-dark py-12 md:py-20 px-8 md:px-24 border-t border-white/5 relative overflow-hidden">
+                    <div className="max-w-screen-2xl mx-auto">
+                        {/* BRAND ARCHITECTURE - COMPACT */}
+                        <div className="mb-12">
+                            <div className="font-industrial text-dark bg-gold px-6 py-3 text-4xl md:text-5xl font-bold uppercase inline-block tracking-[0.4em] mb-6 shadow-2xl">
+                                RISE MATE
+                                <span className="block text-[10px] tracking-[0.8em] mt-1 opacity-80">SOVEREIGN INDUSTRIAL GROUP</span>
                             </div>
-                        </div>
-                        <div className="w-full lg:w-2/5">
-                            <span className="font-industrial text-gold tracking-widest text-base md:text-lg mb-4 block uppercase">02 · VEGAVRUDHI</span>
-                            <h2 className="font-headline italic text-5xl md:text-7xl mb-8 leading-tight">Real <br /> Growth.</h2>
-                            <p className="font-body text-[15px] md:text-lg text-glacier/60 leading-relaxed mb-6 italic">
-                                India’s most trusted growth engine for managed sales, staffing, and customer engagement.
+                            <p className="font-body text-[13px] md:text-[14px] text-glacier/70 max-w-2xl leading-relaxed italic border-l-2 border-gold/40 pl-8 uppercase tracking-[0.1em] font-medium mb-12">
+                                The leading technology partner for circular luxury and sustainable industrial innovation. <br className="hidden md:block" /> Architecting the sovereign future of high-velocity operations and digital capital.
                             </p>
-                            <p className="font-body text-sm text-glacier/40 leading-relaxed mb-8">
-                                From fintech to FMCG, urban hubs to rural markets—Vegavrudhi (Sanskrit for 'Growth') builds sovereign revenue streams through transparent, ethical, and value-first execution.
-                            </p>
-                            
-                            <div className="flex flex-col gap-4 mb-12">
-                                <div className="flex items-center gap-3 font-industrial text-[9px] tracking-[0.3em] text-gold/60">
-                                     <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse" />
-                                     <span>INTEGRITY · OWNERSHIP · EXCELLENCE</span>
+                        </div>
+
+                        {/* DATA REGISTRY - COMPACT GRID */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 border-t border-white/10 pt-12">
+                            <div className="md:col-span-3">
+                                <h6 className="font-industrial text-gold text-[11px] font-bold uppercase tracking-[0.8em] mb-6 flex items-center gap-4">
+                                    <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse"></span> Index
+                                </h6>
+                                <div className="flex flex-col gap-3 font-body text-[11px] text-glacier/50 uppercase tracking-[0.3em] font-bold">
+                                    <Link href="/" className="hover:text-gold transition-all duration-500 hover:translate-x-1">Digital Home</Link>
+                                    <Link href="/companies" className="hover:text-gold transition-all duration-500 hover:translate-x-1">Portfolio Assets</Link>
+                                    <Link href="/leadership" className="hover:text-gold transition-all duration-500 hover:translate-x-1">Executive Suite</Link>
+                                    <Link href="/partners" className="hover:text-gold transition-all duration-500 hover:translate-x-1">Strategic Nexus</Link>
+                                    <Link href="/contact" className="hover:text-gold transition-all duration-500 hover:translate-x-1">Strategic Induction</Link>
                                 </div>
                             </div>
-
-                            <Link href="https://www.vegavruddhi.com/" target="_blank" className="w-full md:w-auto inline-block border border-gold/30 px-10 py-4 text-[10px] md:text-xs font-industrial tracking-[0.4em] hover:bg-gold hover:text-dark transition-all uppercase text-center">
-                                Scale Your Team
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 3. RYM GRENERGY - Deep Tech / AI / Power */}
-                <section ref={rymSect.ref} className="py-24 md:py-48 px-6 md:px-24 bg-dark relative overflow-hidden">
-                    <div className={`grid grid-cols-1 lg:grid-cols-12 gap-12 transition-all duration-1000 ${rymSect.isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                        <div className="lg:col-span-12 mb-16 md:mb-24">
-                            <span className="font-industrial text-gold tracking-widest text-base md:text-lg mb-4 block uppercase whitespace-nowrap">03 · RYM GRENERGY</span>
-                            <h2 className="font-headline italic text-4xl md:text-8xl lg:text-[10rem] leading-none text-glacier/10 lg:text-right uppercase">Power <br className="lg:hidden" /> & Precision</h2>
-                        </div>
-
-                        <div className="lg:col-span-5 flex flex-col justify-center relative z-10">
-                            <h3 className="font-headline italic text-4xl md:text-5xl mb-8">The Industrial <br /> Mind.</h3>
-                            <p className="font-body text-[15px] md:text-lg text-glacier/60 leading-relaxed italic mb-6">
-                                A deep-tech powerhouse engineering India's most resilient AI-powered inverters and IoT automation systems. 
-                            </p>
-                            <p className="font-body text-sm text-glacier/40 leading-relaxed mb-8">
-                                Born from a bold vision to develop the world's greenest battery infrastructure, <span className="text-gold opacity-80">RYM Grenergy</span> now commands a sovereign ecosystem spanning ULTRON energy platforms, INTELLEXA document intelligence, and seismic early-warning networks at IIT Roorkee.
-                            </p>
-                            
-                            <div className="flex flex-col gap-6 mb-12">
-                                <div className="flex items-center gap-6">
-                                    <div className="bg-gold/10 px-4 py-2 border border-gold/20 font-industrial text-[9px] tracking-[0.3em] text-gold uppercase">
-                                        KPIT SPARKLE GOLD WINNER
-                                    </div>
-                                    <div className="h-px flex-grow bg-gold/10" />
-                                </div>
-                                <div className="flex flex-wrap gap-x-8 gap-y-4 font-industrial text-[10px] tracking-[0.4em] text-glacier/40 uppercase">
-                                    <span>ULTRON</span>
-                                    <span>INTELLEXA</span>
-                                    <span>WEIGHBRIDGE AI</span>
-                                    <span>EEW SEISMIC</span>
+                            <div className="md:col-span-4">
+                                <h6 className="font-industrial text-gold text-[11px] font-bold uppercase tracking-[0.8em] mb-6 flex items-center gap-4">
+                                    <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse"></span> Registry
+                                </h6>
+                                <div className="font-body text-[11px] text-glacier/50 leading-[2.2] tracking-[0.3em] font-bold uppercase">
+                                    info@bworth.co.in<br />
+                                    saurabh@vegavruddhi.com<br />
+                                    +91 91166 16636
                                 </div>
                             </div>
-
-                            <Link href="https://rymgrenergy.com/" target="_blank" className="w-full md:w-auto inline-block border border-gold/30 px-10 py-4 text-[10px] md:text-xs font-industrial tracking-[0.4em] hover:bg-gold hover:text-dark transition-all uppercase text-center">
-                                Explore Solutions
-                            </Link>
-                        </div>
-
-                        <div className="lg:col-span-7 relative group">
-                            <Link href="https://rymgrenergy.com/" target="_blank">
-                                <div className="aspect-[16/10] bg-gold/10 p-1 border border-gold/20 rounded-sm relative overflow-hidden editorial-shadow">
-                                    <div className="absolute inset-0 bg-dark/20 mix-blend-overlay z-10" />
-                                    <Image
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH5JFQ6lKeCHRwYVk-nmGmrzVERwoR8koV4BMK1m7pQTE5itXG19jU_DxtJtv0WbF3YNxN_WLGDmqHSihmhOf5QthZ0EulUlopyyhZ28vn-5VoCD6l5qpCxgnX6MIcv6m97KjEMguarFfrqPxLrb4DfDKtS-OazBT75JEgls8jRJz4mXlTWke0oCnkXzjFw5wFZSIh15ibK9LgLHKncbMSdkFxDVbDP4J6WHZfXvGeMhZZksSuQek2i-npV1E0tiTUnd_GwldlHKCo"
-                                        fill
-                                        sizes="(max-width: 1024px) 100vw, 58vw"
-                                        className="object-cover grayscale-0 group-hover:scale-105 transition-all duration-1000 opacity-60 group-hover:opacity-100"
-                                        alt="RYM Grenergy Deep Tech"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-60" />
-                                    <div className="absolute bottom-12 left-12 right-12 z-20">
-                                         <div className="flex justify-between items-end">
-                                             <div className="font-industrial text-[10px] tracking-[0.5em] text-gold uppercase opacity-80">Active Deployments</div>
-                                             <div className="font-headline italic text-4xl text-glacier">24/7 Monitoring</div>
-                                         </div>
-                                         <div className="w-full h-px bg-gold/20 mt-4" />
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div>
-                </section>
-
-                {/* 4. Synchronous - Digital Build */}
-                <section ref={syncSect.ref} className="py-24 md:py-48 px-6 md:px-24 bg-gold text-dark relative -mb-32 md:-mb-64 editorial-shadow z-20">
-                    <div className={`transition-all duration-1000 ${syncSect.isVisible ? 'opacity-100' : 'opacity-0'}`}>
-                        <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-24 items-center">
-                            {/* Logo / Brand Mark Side */}
-                            <div className="lg:col-span-7 order-2 lg:order-1">
-                                <Link href="https://www.synchronousbuilddigital.com/" target="_blank">
-                                    <div className="aspect-[16/10] bg-dark/5 rounded-sm overflow-hidden relative editorial-shadow group border border-dark/10">
-                                        <Image 
-                                            src="/SYNC.png" 
-                                            fill 
-                                            sizes="(max-width: 1024px) 100vw, 60vw"
-                                            className="object-contain p-8 md:p-20 transition-all duration-1000 group-hover:scale-105" 
-                                            alt="Synchronous Build Digital" 
-                                        />
-                                        <div className="absolute inset-0 bg-dark/5 group-hover:bg-dark/0 transition-colors" />
-                                    </div>
-                                </Link>
-                                <div className="mt-8 flex items-center gap-6">
-                                     <div className="w-12 h-12 rounded-full border border-dark/20 p-1">
-                                         <div className="w-full h-full rounded-full bg-dark/10 overflow-hidden relative">
-                                             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-dark/40 text-sm">person</span>
-                                         </div>
-                                     </div>
-                                     <div className="font-industrial text-[10px] tracking-[0.3em] uppercase">
-                                         <span className="block font-bold">Devam Srivastava</span>
-                                         <span className="opacity-40 text-[8px]">Founder & CEO · Digital Architect</span>
-                                     </div>
+                            <div className="md:col-span-5">
+                                <h6 className="font-industrial text-gold text-[11px] font-bold uppercase tracking-[0.8em] mb-6 flex items-center gap-4">
+                                    <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse"></span> Headquarters
+                                </h6>
+                                <div className="font-body text-[11px] text-glacier/50 leading-[2.2] tracking-[0.3em] font-bold uppercase">
+                                    Sector – 69, HR / Jagatpura, RJ<br />
+                                    Institutional NCR / ACTIVE STATUS<br />
+                                    ESTABLISHED 2026 SOVEREIGN REGISTRY
                                 </div>
                             </div>
-
-                            {/* Content Side */}
-                            <div className="lg:col-span-5 order-1 lg:order-2">
-                                <span className="font-industrial tracking-widest text-sm md:text-base mb-4 block uppercase font-bold text-dark/60">04 · SYNCHRONOUS</span>
-                                <h2 className="font-headline italic text-5xl md:text-7xl mb-8 leading-tight">Growth <br /> Architecture.</h2>
-                                
-                                <p className="font-body text-lg md:text-xl leading-relaxed mb-6 italic">
-                                    Surgical precision in digital expansion. 
-                                </p>
-                                <p className="font-body text-sm leading-relaxed mb-12 opacity-80">
-                                    A high-performance technical and marketing arm bridging aesthetic excellence with $2.4B industrial scale via neural scaling and headless logic.
-                                </p>
-                                
-                                <div className="grid grid-cols-2 gap-8 mb-12 border-y border-dark/10 py-8">
-                                     <div className="group">
-                                         <span className="font-industrial text-3xl block font-bold mb-1 tracking-tighter">3.2<span className="text-xs">x</span></span>
-                                         <span className="font-industrial text-[8px] tracking-[0.3em] opacity-40 uppercase">Avg ROI</span>
-                                     </div>
-                                     <div className="group">
-                                         <span className="font-industrial text-3xl block font-bold mb-1 tracking-tighter">50<span className="text-xs">+</span></span>
-                                         <span className="font-industrial text-[8px] tracking-[0.3em] opacity-40 uppercase">Projects</span>
-                                     </div>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-y-6 gap-x-4 font-industrial text-[9px] tracking-[0.2em] uppercase font-bold mb-12">
-                                    <div className="flex flex-col">
-                                        <span className="opacity-40 mb-1">Architecture</span>
-                                        <span>HEADLESS SOLUTIONS</span>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="opacity-40 mb-1">Marketing</span>
-                                        <span>NEURAL SCALING</span>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="opacity-40 mb-1">Sovereign Ops</span>
-                                        <span>AI AUTOMATION</span>
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="opacity-40 mb-1">Commercials</span>
-                                        <span>ROAS OPTIMIZATION</span>
-                                    </div>
-                                </div>
-
-                                <Link href="https://www.synchronousbuilddigital.com/" target="_blank" className="font-industrial text-[10px] tracking-[0.4em] border-b-2 border-dark pb-2 hover:opacity-60 transition-all uppercase inline-block font-bold">
-                                    Activate Cycle →
-                                </Link>
-                            </div>
                         </div>
-                    </div>
-                </section>
 
-                {/* Global Footer / CTA */}
-                <section className="py-48 md:py-64 px-6 md:px-24 bg-dark border-t border-white/5">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="font-headline italic text-5xl md:text-8xl text-glacier mb-12 italic">Join the Kingdom.</h2>
-                        <Link href="/#contact" className="w-full md:w-auto bg-gold text-dark font-industrial text-lg md:text-xl tracking-[0.4em] px-16 py-6 inline-block hover:scale-105 transition-all uppercase">
-                            Acquire Details →
-                        </Link>
-                    </div>
-                </section>
+                        {/* BOTTOM COPYRIGHT - COMPACT */}
+                        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+                            <span className="font-industrial text-[9px] text-glacier/30 tracking-[1em] uppercase font-bold">© 2026 RISEMATE VENTURE ALL RIGHTS RESERVED.</span>
 
-                <footer className="bg-dark py-12 px-8 md:px-24 border-t border-white/5">
-                    <div className="max-w-screen-2xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
-                        <div className="font-industrial text-gold-premium tracking-[0.6em] text-3xl uppercase">RISEMATE VENTURE</div>
-                        <p className="font-body text-[10px] uppercase tracking-widest opacity-20">© 2024 RISEMATE VENTURE. ASSETS OF EXCELLENCE.</p>
+                        </div>
                     </div>
                 </footer>
             </main>
