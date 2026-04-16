@@ -14,23 +14,40 @@ export default function About() {
 
             <main className="pt-20">
                 {/* 1. HERO SECTION */}
-                <section className="py-16 md:py-24 px-6 md:px-24 relative overflow-hidden">
+                <section className="py-24 md:py-40 px-6 md:px-24 relative overflow-hidden">
+                    {/* Subtle grid background */}
+                    <div className="absolute inset-0 grid grid-cols-12 opacity-[0.03] pointer-events-none">
+                        {[...Array(12)].map((_, i) => (
+                            <div key={i} className="border-r border-dark h-full"></div>
+                        ))}
+                    </div>
+
+                    {/* Ambient glow */}
+                    <div className="absolute -top-40 -right-40 w-[700px] h-[700px] bg-[#002366]/5 blur-[180px] rounded-full pointer-events-none" />
+
                     <div className="max-w-screen-2xl mx-auto relative z-10">
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -30 }}
+                            exit={{ opacity: 0, y: -20 }}
                             viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                            transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <span className="text-blue-600 font-black text-xs uppercase tracking-[0.6em] mb-8 block">About the Portal</span>
-                            <h1 className="text-6xl md:text-[10rem] font-black leading-[0.85] text-dark tracking-tighter mb-12">
+                            <div className="flex items-center gap-4 mb-12">
+                                <span className="w-12 h-[1px] bg-[#002366]/30"></span>
+                                <span className="text-xs font-black uppercase tracking-[0.6em] text-[#002366]">About the Portal</span>
+                            </div>
+
+                            <h1 className="text-5xl md:text-[7rem] font-black leading-[0.85] text-dark tracking-tighter mb-16">
                                 The Sovereign <br />
-                                <span className="text-dark/20 italic">Digital</span> Legacy.
+                                <span className="text-[#002366] italic font-serif font-normal">Digital</span> Legacy.
                             </h1>
-                            <p className="text-xl md:text-3xl text-dark/60 font-secondary leading-relaxed max-w-4xl border-l-[3px] border-blue-600 pl-10 md:pl-20 py-4 italic">
-                                RiseMate Venture catalysts economic development by connecting global institutional expertise with high-growth entities across fashion, tech, energy, and digital markets.
-                            </p>
+
+                            <div className="max-w-4xl border-l-[3px] border-[#002366] pl-12 md:pl-20 py-4">
+                                <p className="text-xl md:text-3xl text-dark/40 font-secondary leading-tight italic">
+                                    RiseMate Venture catalysts economic development by connecting global institutional expertise with high-growth entities across fashion, tech, energy, and digital markets.
+                                </p>
+                            </div>
                         </motion.div>
                     </div>
 
@@ -39,6 +56,7 @@ export default function About() {
                         Legacy
                     </div>
                 </section>
+
 
                 {/* 2. MISSION & VISION */}
                 <section className="py-16 md:py-24 bg-dark text-white relative overflow-hidden">

@@ -96,14 +96,14 @@ const ScrollReveal = ({ children }) => {
     });
 
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-    const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
 
     return (
-        <motion.div ref={ref} style={{ opacity, scale }}>
+        <motion.div ref={ref} style={{ opacity }}>
             {children}
         </motion.div>
     );
 };
+
 
 const HeroContent = ({ theme }) => {
     const isDark = theme === "dark";
@@ -325,85 +325,79 @@ const FounderCard = ({ founder }) => {
             variants={fadeInUp}
             className="group relative bg-white border border-dark/5 rounded-[48px] overflow-hidden hover:border-[#002366]/30 transition-all duration-1000 flex flex-col shadow-[0_40px_100px_-20px_rgba(0,18,51,0.04)] hover:shadow-[0_80px_160px_-40px_rgba(0,35,102,0.1)]"
         >
-            {/* Top: Image Space */}
-            <div className="relative h-80 w-full bg-[#f8f9fa] overflow-hidden">
+            {/* Top: Image Space - LARGE */}
+            <div className="relative h-[600px] w-full bg-[#001233] overflow-hidden">
                 <Image
                     src={founder.image}
                     alt={founder.name}
                     fill
-                    className="object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-100 group-hover:scale-110"
+                    className="object-cover object-top transition-all duration-1000 scale-100 group-hover:scale-110"
+                    style={{ color: 'transparent' }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#002366]/40 via-transparent to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001233]/80 via-transparent to-transparent" />
 
                 {/* Executive Tier Badge */}
-                <div className="absolute top-8 left-8">
+                <div className="absolute top-8 left-8 z-20">
                     <div className="bg-white/10 backdrop-blur-xl border border-white/20 px-6 py-2 rounded-full">
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white underline decoration-[#002366] decoration-2 underline-offset-4">
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white">
                             {founder.tier}
                         </span>
+                    </div>
+                </div>
+
+                {/* Name overlay at bottom of image */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 z-20">
+                    <div className="flex justify-between items-end">
+                        <div>
+                            <h3 className="text-3xl lg:text-4xl font-black text-white tracking-tighter leading-none mb-1 drop-shadow-lg">
+                                {founder.name}
+                            </h3>
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/60">
+                                {founder.role}
+                            </p>
+                        </div>
+                        {founder.logo && (
+                            <div className="w-12 h-12 rounded-xl border border-white/20 p-2 flex items-center justify-center bg-white shadow-xl">
+                                <Image src={founder.logo} alt="Company Logo" width={32} height={32} className="object-contain" unoptimized={true} />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
 
             {/* Profile Content */}
-            <div className="p-8 flex flex-col h-full">
+            <div className="p-10 flex flex-col gap-8">
                 <div>
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h3 className="text-4xl lg:text-5xl font-black text-dark tracking-tighter leading-none mb-3">
-                                {founder.name}
-                            </h3>
-                            <p className="text-xs font-black uppercase tracking-[0.3em] text-[#002366]">
-                                {founder.role}
-                            </p>
-                        </div>
-                        {founder.logo && (
-                            <div className="w-16 h-16 rounded-2xl border border-dark/5 p-3 flex items-center justify-center bg-white shadow-xl group-hover:-translate-y-2 transition-transform duration-700">
-                                <Image src={founder.logo} alt="Company Logo" width={40} height={40} className="object-contain" unoptimized={true} />
-                            </div>
-                        )}
+                    <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-4">Operational Mandate</h4>
+                    <p className="text-xl font-semibold text-dark leading-snug italic border-l-4 border-[#002366]/40 pl-6 py-1">
+                        "{founder.philosophy}"
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-dark/5">
+                    <div>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-[#002366]/60 mb-3">Strategic Vision</h5>
+                        <p className="text-base text-dark/60 leading-relaxed">
+                            {founder.vision}
+                        </p>
                     </div>
-
-                    <div className="flex flex-col gap-6">
-                        <div className="space-y-6">
-                            <div>
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-4">Operational Mandate</h4>
-                                <p className="text-xl font-semibold text-dark leading-tight italic border-l-3 border-[#002366] pl-6 py-1">
-                                    "{founder.philosophy}"
-                                </p>
-                            </div>
-
-                            <div>
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-4">Strategic Vision</h4>
-                                <p className="text-base text-dark/70 font-medium leading-relaxed">
-                                    {founder.vision}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="space-y-8">
-                            <div>
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-dark/30 mb-4">Core Focus</h4>
-                                <div className="p-6 bg-[#f0f7ff]/50 rounded-[32px] border border-[#002366]/5 group-hover:bg-[#002366]/5 transition-colors duration-700">
-                                    <p className="text-[13px] font-black text-dark uppercase tracking-wider leading-relaxed">
-                                        {founder.focus}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.4)] animate-pulse" />
-                                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-dark">Verified Institutional Lead</span>
-                            </div>
-                        </div>
+                    <div>
+                        <h5 className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/40 mb-3">Core Focus</h5>
+                        <p className="text-base text-dark/60 leading-relaxed">
+                            {founder.focus}
+                        </p>
                     </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-dark/5 flex items-center justify-between">
+                <div className="flex items-center justify-between pt-6 border-t border-dark/5">
+                    <div className="flex items-center gap-3">
+                        <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.5)] animate-pulse" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-dark/40">Verified Institutional Lead</span>
+                    </div>
                     <Magnetic>
-                        <Link href="/contact" className="group/btn flex items-center gap-6">
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-dark">Connect</span>
-                            <div className="w-12 h-12 rounded-full border border-dark/10 flex items-center justify-center group-hover/btn:bg-[#002366] group-hover/btn:text-white group-hover/btn:border-none transition-all duration-700">
+                        <Link href="/contact" className="group/btn flex items-center gap-4">
+                            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-dark">Connect</span>
+                            <div className="w-11 h-11 rounded-full border border-dark/10 flex items-center justify-center group-hover/btn:bg-[#002366] group-hover/btn:text-white group-hover/btn:border-none transition-all duration-500">
                                 <span className="material-symbols-outlined text-base">north_east</span>
                             </div>
                         </Link>
@@ -423,7 +417,7 @@ const founders = [
         vision: "Architecting high-performance field-force efficiency through algorithmic sales fulfillment for national growth engines.",
         focus: "Strategic Retail Expansion & End-to-End Lead conversion fulfillment across India's Tier 1 and 2 cities.",
         logo: "/VEGA.png",
-        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
+        image: "/saurab jain sir .jpeg"
     },
     {
         tier: "Executive Tier 002",
@@ -433,7 +427,7 @@ const founders = [
         vision: "Re-imagining luxury fashion as a circular asset, creating a global movement towards zero-landfill conscious consumerism.",
         focus: "Circular Luxury Fashion, Ethical Upcycling Ecosystems & Sustainable Global Value Chain Integration.",
         logo: "/BWORTH.jpg",
-        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2670&auto=format&fit=crop"
+        image: "/dheeraj sir.jpeg"
     },
     {
         tier: "Executive Tier 003",
@@ -453,7 +447,7 @@ const founders = [
         vision: "Architecting high-velocity digital ecosystems for high-growth elite brands via algorithmic process automation.",
         focus: "Brand Identity Architecture, Autonomous AI Agents & Predictive Growth Modeling.",
         logo: "/sync.jpg",
-        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2574&auto=format&fit=crop"
+        image: "/devam .jpeg"
     }
 ];
 
@@ -713,99 +707,92 @@ export default function Home() {
                 </ScrollReveal>
 
                 {/* 3. CORE VALUES - ARCHITECTURAL REDESIGN */}
-                <ScrollReveal>
-                    <section className="py-24 md:py-32 bg-[#FAF9F6] relative overflow-hidden">
-                        {/* Background Infrastructure */}
-                        <div className="absolute top-0 left-0 w-full h-[1px] bg-dark/5" />
-                        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-dark/5" />
+                <section id="values" className="py-24 md:py-32 bg-[#FAF9F6] relative overflow-hidden">
+                    {/* Background Infrastructure */}
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-dark/5" />
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-dark/5" />
 
-                        <div className="container-wide relative z-10">
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-end mb-24">
+                    <div className="container-wide relative z-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-end mb-24">
+                            <div className="lg:col-span-8">
+                                <SectionLabel>Institutional Foundation</SectionLabel>
+                                <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-dark leading-[0.95] tracking-tight">
+                                    elevating <br />
+                                    <span className="text-[#002366]">global</span> standards<span className="text-[#002366]">.</span>
+                                </h2>
+                            </div>
+                            <div className="lg:col-span-4 pb-4">
+                                <p className="text-xl md:text-2xl text-dark/70 font-semibold leading-relaxed border-l-4 border-[#002366] pl-10 italic">
+                                    "We combine deep market expertise with a commitment to sustainable value creation."
+                                </p>
+                            </div>
+                        </div>
+
+
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                            {[
+                                {
+                                    title: "Our Vision",
+                                    subtitle: "The Definitive Bridge",
+                                    icon: "token",
+                                    num: "01",
+                                    desc: "To be the definitive bridge between global investors and India's dynamic growth sectors, setting new benchmarks for transparency and institutional performance."
+                                },
+                                {
+                                    title: "Our Mission",
+                                    subtitle: "Ethical Empowerment",
+                                    icon: "account_tree",
+                                    num: "02",
+                                    desc: "Empowering businesses through ethical investment practices, autonomous vertical integration, and a relentless focus on long-term capital appreciation."
+                                }
+                            ].map((card, i) => (
                                 <motion.div
+                                    key={i}
                                     variants={sectionAnimation}
                                     initial="initial"
                                     whileInView="whileInView"
-                                    className="lg:col-span-8"
+                                    whileHover={{ y: -10 }}
+                                    className="group relative p-12 lg:p-16 bg-white rounded-[40px] md:rounded-[60px] border border-dark/5 hover:border-[#002366]/30 hover:shadow-[0_80px_120px_-30px_rgba(232,126,67,0.08)] transition-all duration-1000 overflow-hidden"
                                 >
-                                    <SectionLabel>Institutional Foundation</SectionLabel>
-                                    <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-dark leading-[0.95] tracking-tight">
-                                        elevating <br />
-                                        <span className="text-[#002366]">global</span> standards<span className="text-[#002366]">.</span>
-                                    </h2>
-                                </motion.div>
-                                <motion.div
-                                    variants={fadeInUp}
-                                    className="lg:col-span-4 pb-4"
-                                >
-                                    <p className="text-xl md:text-2xl text-dark/70 font-semibold leading-relaxed border-l-4 border-[#002366] pl-10 italic">
-                                        "We combine deep market expertise with a commitment to sustainable value creation."
-                                    </p>
-                                </motion.div>
-                            </div>
+                                    {/* Card Background Number */}
+                                    <div className="absolute top-10 right-10 text-[120px] md:text-[200px] font-black text-dark/[0.03] leading-none transition-all duration-1000 group-hover:text-[#002366]/[0.05] group-hover:scale-110 pointer-events-none">
+                                        {card.num}
+                                    </div>
 
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                                {[
-                                    {
-                                        title: "Our Vision",
-                                        subtitle: "The Definitive Bridge",
-                                        icon: "token",
-                                        num: "01",
-                                        desc: "To be the definitive bridge between global investors and India's dynamic growth sectors, setting new benchmarks for transparency and institutional performance."
-                                    },
-                                    {
-                                        title: "Our Mission",
-                                        subtitle: "Ethical Empowerment",
-                                        icon: "account_tree",
-                                        num: "02",
-                                        desc: "Empowering businesses through ethical investment practices, autonomous vertical integration, and a relentless focus on long-term capital appreciation."
-                                    }
-                                ].map((card, i) => (
-                                    <motion.div
-                                        key={i}
-                                        variants={sectionAnimation}
-                                        initial="initial"
-                                        whileInView="whileInView"
-                                        whileHover={{ y: -10 }}
-                                        className="group relative p-12 lg:p-16 bg-white rounded-[40px] md:rounded-[60px] border border-dark/5 hover:border-[#002366]/30 hover:shadow-[0_80px_120px_-30px_rgba(232,126,67,0.08)] transition-all duration-1000 overflow-hidden"
-                                    >
-                                        {/* Card Background Number */}
-                                        <div className="absolute top-10 right-10 text-[120px] md:text-[200px] font-black text-dark/[0.03] leading-none transition-all duration-1000 group-hover:text-[#002366]/[0.05] group-hover:scale-110 pointer-events-none">
-                                            {card.num}
+                                    <div className="relative z-10 flex flex-col h-full gap-10">
+                                        <div className="flex items-center gap-6">
+                                            <div className="w-16 h-16 rounded-2xl bg-dark text-white flex items-center justify-center group-hover:bg-[#002366] transition-colors duration-700">
+                                                <span className="material-symbols-outlined text-3xl">{card.icon}</span>
+                                            </div>
+                                            <div>
+                                                <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#002366] mb-1">{card.subtitle}</h3>
+                                                <p className="text-3xl font-black text-dark tracking-tighter">{card.title}</p>
+                                            </div>
                                         </div>
 
-                                        <div className="relative z-10 flex flex-col h-full gap-10">
-                                            <div className="flex items-center gap-6">
-                                                <div className="w-16 h-16 rounded-2xl bg-dark text-white flex items-center justify-center group-hover:bg-[#002366] transition-colors duration-700">
-                                                    <span className="material-symbols-outlined text-3xl">{card.icon}</span>
-                                                </div>
-                                                <div>
-                                                    <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#002366] mb-1">{card.subtitle}</h3>
-                                                    <p className="text-3xl font-black text-dark tracking-tighter">{card.title}</p>
-                                                </div>
-                                            </div>
+                                        <div className="max-w-md">
+                                            <p className="text-xl md:text-2xl text-dark/30 font-semibold font-secondary leading-snug group-hover:text-dark/80 transition-colors duration-700">
+                                                "{card.desc}"
+                                            </p>
+                                        </div>
 
-                                            <div className="max-w-md">
-                                                <p className="text-xl md:text-2xl text-dark/30 font-semibold font-secondary leading-snug group-hover:text-dark/80 transition-colors duration-700">
-                                                    "{card.desc}"
-                                                </p>
+                                        <div className="mt-auto pt-10 border-t border-dark/5 flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-[2px] w-12 bg-dark/10 group-hover:bg-[#002366] group-hover:w-20 transition-all duration-1000" />
+                                                <span className="text-[9px] font-black uppercase tracking-[0.5em] text-dark/40 group-hover:text-dark transition-colors">Institutional Mandate</span>
                                             </div>
-
-                                            <div className="mt-auto pt-10 border-t border-dark/5 flex items-center justify-between">
-                                                <div className="flex items-center gap-4">
-                                                    <div className="h-[2px] w-12 bg-dark/10 group-hover:bg-[#002366] group-hover:w-20 transition-all duration-1000" />
-                                                    <span className="text-[9px] font-black uppercase tracking-[0.5em] text-dark/40 group-hover:text-dark transition-colors">Institutional Mandate</span>
-                                                </div>
-                                                <div className="w-10 h-10 rounded-full border border-dark/5 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-700">
-                                                    <span className="material-symbols-outlined text-sm">north_east</span>
-                                                </div>
+                                            <div className="w-10 h-10 rounded-full border border-dark/5 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-700">
+                                                <span className="material-symbols-outlined text-sm">north_east</span>
                                             </div>
                                         </div>
-                                    </motion.div>
-                                ))}
-                            </div>
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
-                    </section>
-                </ScrollReveal>
+                    </div>
+                </section>
+
 
                 {/* 4. LEADERSHIP - ARCHITECTS STAGGER */}
                 <ScrollReveal>
